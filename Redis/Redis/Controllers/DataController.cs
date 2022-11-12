@@ -6,11 +6,11 @@ namespace Redis.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class DataController : ControllerBase
     {
         private readonly IDatabaseCommunication _repo;
 
-        public CustomersController(IDatabaseCommunication repo)
+        public DataController(IDatabaseCommunication repo)
         {
             _repo = repo;
         }
