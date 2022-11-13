@@ -12,6 +12,13 @@ namespace Redis.Data
             _redis = redis;
         }
 
+        public void DeleteData(string key)
+        {
+            var db = _redis.GetDatabase();
+
+            db.KeyDelete(key);
+        }
+
         public string GetField(string key, string field)
         {
             var db = _redis.GetDatabase();
@@ -25,12 +32,20 @@ namespace Redis.Data
         }
         
 
-        public void SetField(string key, string value, string field)
+        public void SetData(string key, string[] value, string[] field)
         {
             var db = _redis.GetDatabase();
 
+            if(value.Length != field.Length)
+            {
+                throw new InvalidDataException();
+            }
+
             var values = new List<HashEntry>();
-            values.Add(new HashEntry(field, value));
+            for (int i = 0; i < value.Length; i++)
+            {
+                values.Add(new HashEntry(field[i], value[i]));
+            }
 
             db.HashSet(key, values.ToArray());
         }

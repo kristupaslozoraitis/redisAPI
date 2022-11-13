@@ -27,13 +27,19 @@ namespace Redis.Controllers
             return NotFound();
         }
         [HttpPost]
-        public ActionResult<string> SetField([FromBody]JObject data)
+        public ActionResult<string> SetData([FromBody]JObject data)
         {
             string key = data["key"].ToObject<string>();
-            string value = data["value"].ToObject<string>();
-            string field = data["field"].ToObject<string>();
-            _repo.SetField(key, value, field);
+            string[] value = data["value"].ToObject<string[]>();
+            string[] field = data["field"].ToObject<string[]>();
+            _repo.SetData(key, value, field);
             return Ok();
+        }
+        [HttpDelete("{key}")]
+        public ActionResult DeleteData(string key)
+        {
+            _repo.DeleteData(key);
+            return NoContent();
         }
     }
 }
