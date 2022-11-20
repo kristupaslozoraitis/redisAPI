@@ -92,12 +92,18 @@ namespace Redis.Data
             switch (database)
             {
                 case "db_arch_sales":
+                    if (key.Contains("products"))
+                    {
+                        throw new Exception("Cannot update child element.");
+                    }
                     db = db_SalesArchivedYears;
-                    UpdateProducts(ChangeKey(key, false), values, db_ProdArchivedYears);
                     break;
                 case "db_curr_sales":
+                    if (key.Contains("products"))
+                    {
+                        throw new Exception("Cannot update child element.");
+                    }
                     db = db_SalesCurrentYears;
-                    UpdateProducts(ChangeKey(key, false), values, db_ProdCurrentYears);
                     break;
                 case "db_arch_prod":
                     db = db_ProdArchivedYears;
